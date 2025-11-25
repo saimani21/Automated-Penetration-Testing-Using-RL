@@ -35,9 +35,63 @@ Future phases will extend this to other vulnerabilities (e.g. XSS, Command Injec
 
 The long-term project vision is a **multi-vulnerability orchestrator**:
 
+
+
+
+
 ```text
 Automated Penetration Testing Using RL
     ├── SQL Injection Module (this phase ✅)
     ├── XSS Module (planned)
     ├── Command Injection Module (planned)
     └── ... (future modules)
+
+
+
+
+
+4. Project Structure
+   rl-pentester/
+│
+├── env/
+│   └── dvwa_sqli_env.py          # Gymnasium environment wrapping DVWA SQLi (hard-mode)
+│
+├── scripts/
+│   ├── __init__.py
+│   ├── dvwa_client.py            # DVWA HTTP client: login, set security, SQLi requests
+│   ├── reward_utils.py           # SQLi payload library + success/error heuristics
+│   ├── manual_dvwa_sqli.py       # Manual login + SQLi test (for verification)
+│   ├── test_env_random.py        # Random-agent sanity check of the environment
+│   └── use_trained_agent_once.py # Use trained model once to exploit SQLi
+│
+├── training/
+│   ├── __init__.py
+│   ├── train_dqn_sqli.py         # Train DQN agent on DVWASQLiEnv
+│   └── eval_dqn_sqli.py          # Evaluate trained agent vs random policy
+│
+├── models/
+│   └── dqn_dvwa_sqli_hard.zip    # Trained DQN model (created after training)
+│
+├── data/                         # (Optional) logs, CSVs, plots
+│
+├── venv/                         # Python virtual environment (not tracked)
+│
+└── README.md                     # This file
+
+
+
+5. Setup (Phase 1 – Environment)
+5.1 Requirements
+
+OS: Windows / Linux / macOS
+
+Python: 3.11+
+
+Docker Desktop / Docker Engine
+
+Git
+
+Recommended IDE: VS Code
+
+5.2 Python Virtual Environment
+Install dependencies
